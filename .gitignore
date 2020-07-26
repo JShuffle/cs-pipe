@@ -2,4 +2,5 @@
 todo.txt
 # test dataset
 dataset/
-cspipe/tests/
+cspipe/tests/*.pdf
+cspipe/__pycache__

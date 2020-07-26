@@ -9,7 +9,17 @@ from matplotlib.colors import to_hex
 #import os
 #sys.path.append(os.path.realpath('.'))
 from utils import str2bool,setColorConf
-USAGE="""scripts to draw cluster specific stack barplot."""
+USAGE="""
+Desc:
+script to draw cluster specific stack barplot.
+Example：
+python stackbar.py -m metadata.csv \
+    -f profile.csv \
+    -n cluster \
+    -far False \
+    -o stackbar.pdf
+done
+"""
 
 def resortFirstSample(df):
     """

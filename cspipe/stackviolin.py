@@ -10,16 +10,16 @@ import sys
 from .utils import str2bool,setColorConf
 
 USAGE="""
-iodir=/pnas/limk_group/shenzj/ncov_KLZ/clustering
-svl=/pnas/limk_group/shenzj/scripts/stackviolin.py
-
-python $svl \
-    -f $iodir/genus_rel_5_0.005_rescaled.csv \
-    -m $iodir/bray_top_12_cord_pam_10.csv \
+Desc:
+script to draw stacked violinplot
+Example:
+python stackviolin.py \
+    -f profile.csv \
+    -m cluster.csv \
     -n cluster \
     -far False \
     -F 0.05 \
-    -o $PWD/svl.pdf
+    -o svl.pdf
 """
 
 

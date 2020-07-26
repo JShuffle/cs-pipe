@@ -9,18 +9,9 @@ import os
 import argparse
 from .utils import str2bool,setColorConf
 USAGE="""
-XXX.
+Desc:
+script to draw sample-wise silhouette coeffient plot.
 """
-def parser():
-    args = argparse.ArgumentParser(description=USAGE)
-    args.add_argument('-f','--featureDataFrame')
-    args.add_argument('-m','--metadataDataFrame')
-    args.add_argument('-x','--metric')
-    args.add_argument('-n','--clustername')
-    args.add_argument('-far','--feature_are_row',default="True",type=str2bool)
-    args.add_argument('-o','--output',default = './SilhouetteScore.pdf')
-    args = args.parse_args()
-    return args
 
 def checkIndexIdenticcal(featureDataFrame,metadataDataFrame):
     return np.sum(featureDataFrame.index != metadataDataFrame.index)
@@ -172,7 +163,15 @@ def plotSampleWiseSilhouetteScore(featureDataFrame,
     #plt.show()
     return fig,ax
 if __name__ == "__main__":
-    args = parser()
+    args = argparse.ArgumentParser(description=USAGE)
+    args.add_argument('-f','--featureDataFrame')
+    args.add_argument('-m','--metadataDataFrame')
+    args.add_argument('-x','--metric')
+    args.add_argument('-n','--clustername')
+    args.add_argument('-far','--feature_are_row',default="True",type=str2bool)
+    args.add_argument('-o','--output',default = './SilhouetteScore.pdf')
+    args = args.parse_args()
+
     df = args.featureDataFrame
     metadata = args.metadataDataFrame
     metric = args.metric
