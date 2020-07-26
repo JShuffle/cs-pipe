@@ -5,10 +5,11 @@ from matplotlib import pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.cm as cm
 from matplotlib.colors import to_hex
-USAGE="""
-xxx
-"""
-
+#import sys
+#import os
+#sys.path.append(os.path.realpath('.'))
+from utils import str2bool,setColorConf
+USAGE="""scripts to draw cluster specific stack barplot."""
 
 def resortFirstSample(df):
     """
@@ -66,31 +67,12 @@ def StackBarplot(df,
                  rank=False,axes=None,
                 fontsize=15,
                  linewidth=0.1,
-                 xticklabel=False,
-                 addnumber=True,yticklabel=True,save=False):
+                yticklabel=True,save=False):
     """
     stacked barplot for basic visualization of taxonomic abundance df.
 
-    Parameters
-    ----------
     df: pandas DataFrame.
         one col per sample, and one row per feature(taxonomy)
-
-    addnumber: Boolean
-        if True, each feature value would be added to the figure.
-
-    xticklabel: Boolean
-        if True, xticklabel would be added to the figure.
-
-    yticklabel: Boolean
-        if True, yticklabel would be added to the figure.
-
-    save: Boolean
-        if true, figure would be save to the current workdir.
-
-    Returns
-    -------
-    ax: matploblib.axes object
     """
     if rank:
         df = resortFirstSample(df)
@@ -123,19 +105,7 @@ def StackBarplot(df,
                 label=feature, color=category_colors[i])
 
         starts = [i+j for i,j in zip(starts,height)]
-        #print(starts)
-        """
-        TODO：addnumber 功能待维护
-        """
-        if addnumber:
-            ## add number on the bar
-            ycenters = starts + height / 2
-            #print(color)
-            ## hex2rgb
-            r,g,b = tuple(int(color.lstrip('#')[i:i+2], 16) for i in (0, 2, 4))
-            #r, g, b, _ = color
-            text_color = 'white' if r * g * b < 200 else 'darkgrey'
-            ax.text(sampleindex, ycenters, str(int(height)), ha='center', va='center',color=text_color)
+
     ax.legend(bbox_to_anchor=(1, 0),
               loc='lower left',
               fontsize=fontsize,
@@ -150,10 +120,7 @@ def StackBarplot(df,
         ylabel.set_fontsize(10)
 
 
-    if xticklabel:
-        ax.set_xticklabels(list(df.columns),rotation=90)
-    else:
-        ax.xaxis.set_major_locator(ticker.NullLocator())
+    ax.xaxis.set_major_locator(ticker.NullLocator())
     ## set spines invisible
     ax.spines['bottom'].set_color(None)
     ax.spines['right'].set_color(None)
@@ -233,11 +200,10 @@ if __name__ == "__main__":
         fig,ax = StackBarplot(pfs[cs],
                         bin_width=1,
                         axes =(fig,ax),
-                        addnumber=False,xticklabel=False,
+                        xticklabel=False,
                         yticklabel=True,
                         fontsize=10,
-                        linewidth = line_width,
-                        save=False)
+                        linewidth = line_width)
 
         ax.set_title("cluster:%s" % cs)
     fig.savefig(fname,bbox_inches = 'tight',dpi=1000)
